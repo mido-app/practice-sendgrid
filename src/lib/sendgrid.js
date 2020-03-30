@@ -36,8 +36,7 @@ class SendGrid {
       personalizations: [
         {
           to: [ { email: to } ],
-          subject: subject,
-          "send_at": sendAt ? Math.round(sendAt.getTime() / 1000) : undefined
+          subject: subject
         }
       ],
       from: { email: from },
@@ -48,7 +47,8 @@ class SendGrid {
         }
       ],
       categories: categories,
-      custom_args: customArgs
+      custom_args: customArgs,
+      "send_at": sendAt ? Math.round(sendAt.getTime() / 1000) : undefined
     }
     return await this.client.request({
       method: 'POST',
@@ -64,7 +64,9 @@ class SendGrid {
     templateId,
     templateData,
     categories,
-    customArgs
+    customArgs,
+    batchId,
+    sendAt
   }) {
     const body = {
       template_id: templateId,
@@ -85,7 +87,9 @@ class SendGrid {
         two: 'ヘッダ2'
       },
       categories: categories,
-      custom_args: customArgs
+      custom_args: customArgs,
+      "send_at": sendAt ? Math.round(sendAt.getTime() / 1000) : undefined,
+      "batch_id": batchId
     }
     return await this.client.request({
       method: 'POST',
@@ -108,6 +112,13 @@ class SendGrid {
     return await this.client.request({
       method: 'GET',
       url: `/v3/templates/${templateId}`,
+    })
+  }
+
+  async generateBatchId() {
+    return await this.client.request({
+      method: 'POST',
+      url: '/v3/mail/batch'
     })
   }
 }
