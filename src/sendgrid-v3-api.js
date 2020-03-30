@@ -5,8 +5,8 @@ async function main () {
 
   // 今すぐメールを送る
   // await sendgrid.sendMail({
-  //   from: 'send-mail-test@example.com',
-  //   to: 'xxx@example.com',
+  //   from: 'yutaka.omido@gmail.com',
+  //   to: 'yutaka.omido@example.com',
   //   subject: 'SendGrid Test Mail',
   //   contentType: 'text/html',
   //   contentValue: '<strong>Do not reply this address because it is for send only.</strong>',
@@ -20,8 +20,8 @@ async function main () {
   // let sendAt = new Date()
   // sendAt.setHours(sendAt.getHours() + 3)
   // await sendgrid.scheduleMail({
-  //   from: 'send-mail-test@example.com',
-  //   to: 'xxx@example.com',
+  //   from: 'yutaka.omido@gmail.com',
+  //   to: 'yutaka.omido@example.com',
   //   subject: 'SendGrid Test Mail',
   //   contentType: 'text/html',
   //   contentValue: '<strong>Do not reply this address because it is for send only.</strong>',
@@ -29,20 +29,25 @@ async function main () {
   // })
 
   // テンプレート一覧取得
-  // return await sendgrid.listTemplates()
+  const res = await sendgrid.listTemplates()
+  res[1].templates.forEach(template => {
+    console.log(`----- template ${template.id} -----`)    
+    console.log(template)
+  })
 
   // テンプレート取得
   // const template = await sendgrid.getTemplate('d-edbc1d3bb0ff43f59b2e3bc965ebfea3')
   // console.log(JSON.stringify(template))
+  // return template
 
   // テンプレートを利用して送信
   await sendgrid.sendMailWithTemplate({
-    from: 'send-mail-test@example.com',
-    to: 'xxx@example.com',
+    from: 'yutaka.omido@gmail.com',
+    to: 'yutaka.omido@gmail.com',
     subject: 'SendGrid Test Mail',
-    templateId: 'd-edbc1d3bb0ff43f59b2e3bc965ebfea3',
+    templateId: 'd-fefe23b10789461bab638f738d24655b',
     templateData: {
-      message: 'これはコードから埋め込まれたメッセージです'
+      Button_Url: 'https://qiita.com/'
     },
     customArgs: {
       username: 'mido-app'
@@ -52,6 +57,8 @@ async function main () {
 
 main()
   .then(res => {
+    // index = 0の要素はヘッダやステータスコードなどの情報が含まれるオブジェクト
+    // index = 1の要素がレスポンスボディ
     console.log('success')
   })
   .catch(err => {

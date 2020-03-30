@@ -8,4 +8,4 @@ services:
     env_file:
       - sendgrid.env
     working_dir: /work
-    command: sleep 10000
+    command: sh -c "npm i && npm run api"
