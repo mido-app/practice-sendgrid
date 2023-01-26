@@ -13,7 +13,7 @@
   "dependencies": {
     "@sendgrid/client": "^6.5.3",
     "@sendgrid/mail": "^6.5.4",
-    "ua-parser-js": "^0.7.21"
+    "ua-parser-js": "^0.7.33"
   },
   "devDependencies": {
     "now": "^17.0.4"
